@@ -1,0 +1,479 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions targetNamespace="urn:sap-com:document:sap:rfc:functions" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="urn:sap-com:document:sap:rfc:functions" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+	xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
+	<wsdl:documentation>
+		<sidl:sidl xmlns:sidl="http://www.sap.com/2007/03/sidl" />
+	</wsdl:documentation>
+	<wsp:UsingPolicy wsdl:required="true" />
+	<wsp:Policy wsu:Id="BN_ZCA_UPDATE_STORE_DATA_OLS">
+		<wsaw:UsingAddressing xmlns:wsaw="http://schemas.xmlsoap.org/ws/2004/08/addressing" />
+		<saptrnbnd:OptimizedXMLTransfer uri="http://xml.sap.com/2006/11/esi/esp/binxml" xmlns:saptrnbnd="http://www.sap.com/webas/710/soap/features/transportbinding/"
+			wsp:Optional="true" />
+		<sapattahnd:Enabled xmlns:sapattahnd="http://www.sap.com/710/features/attachment/">false</sapattahnd:Enabled>
+		<wsp:ExactlyOne xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:sapsp="http://www.sap.com/webas/630/soap/features/security/policy" xmlns:sp="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702"
+			xmlns:wsa="http://www.w3.org/2005/08/addressing" xmlns:wsu="http://schemas.xmlsoap.org/ws/2002/07/utility">
+			<wsp:All>
+				<sp:TransportBinding>
+					<wsp:Policy>
+						<sp:TransportToken>
+							<wsp:Policy>
+								<sp:HttpsToken>
+									<wsp:Policy>
+										<sp:HttpBasicAuthentication />
+									</wsp:Policy>
+								</sp:HttpsToken>
+							</wsp:Policy>
+						</sp:TransportToken>
+						<sp:AlgorithmSuite>
+							<wsp:Policy>
+								<sp:TripleDesRsa15 />
+							</wsp:Policy>
+						</sp:AlgorithmSuite>
+						<sp:Layout>
+							<wsp:Policy>
+								<sp:Strict />
+							</wsp:Policy>
+						</sp:Layout>
+					</wsp:Policy>
+				</sp:TransportBinding>
+			</wsp:All>
+		</wsp:ExactlyOne>
+	</wsp:Policy>
+	<wsp:Policy wsu:Id="IF_ZCA_UPDATE_STORE_DATA_OLS">
+		<sapsession:Session xmlns:sapsession="http://www.sap.com/webas/630/soap/features/session/">
+			<sapsession:enableSession>false</sapsession:enableSession>
+		</sapsession:Session>
+		<wsp:ExactlyOne xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:sapsp="http://www.sap.com/webas/630/soap/features/security/policy" xmlns:sp="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702"
+			xmlns:wsa="http://www.w3.org/2005/08/addressing" xmlns:wsu="http://schemas.xmlsoap.org/ws/2002/07/utility" />
+	</wsp:Policy>
+	<wsp:Policy wsu:Id="OP_ZCA_UPDATE_STORE_DATA_OLS">
+		<sapcomhnd:enableCommit xmlns:sapcomhnd="http://www.sap.com/NW05/soap/features/commit/">false</sapcomhnd:enableCommit>
+		<sapblock:enableBlocking xmlns:sapblock="http://www.sap.com/NW05/soap/features/blocking/">true</sapblock:enableBlocking>
+		<saptrhnw05:required xmlns:saptrhnw05="http://www.sap.com/NW05/soap/features/transaction/">no</saptrhnw05:required>
+		<saprmnw05:enableWSRM xmlns:saprmnw05="http://www.sap.com/NW05/soap/features/wsrm/">false</saprmnw05:enableWSRM>
+	</wsp:Policy>
+	<wsdl:types>
+		<xsd:schema attributeFormDefault="qualified" targetNamespace="urn:sap-com:document:sap:rfc:functions">
+			<xsd:simpleType name="RfcException.Message.Number">
+				<xsd:restriction base="xsd:string">
+					<xsd:maxLength value="3" />
+					<xsd:pattern value="\d*" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="char1">
+				<xsd:restriction base="xsd:string">
+					<xsd:maxLength value="1" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="char10">
+				<xsd:restriction base="xsd:string">
+					<xsd:maxLength value="10" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="char12">
+				<xsd:restriction base="xsd:string">
+					<xsd:maxLength value="12" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="char150">
+				<xsd:restriction base="xsd:string">
+					<xsd:maxLength value="150" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="char2">
+				<xsd:restriction base="xsd:string">
+					<xsd:maxLength value="2" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="char20">
+				<xsd:restriction base="xsd:string">
+					<xsd:maxLength value="20" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="char220">
+				<xsd:restriction base="xsd:string">
+					<xsd:maxLength value="220" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="char241">
+				<xsd:restriction base="xsd:string">
+					<xsd:maxLength value="241" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="char25">
+				<xsd:restriction base="xsd:string">
+					<xsd:maxLength value="25" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="char250">
+				<xsd:restriction base="xsd:string">
+					<xsd:maxLength value="250" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="char255">
+				<xsd:restriction base="xsd:string">
+					<xsd:maxLength value="255" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="char3">
+				<xsd:restriction base="xsd:string">
+					<xsd:maxLength value="3" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="char30">
+				<xsd:restriction base="xsd:string">
+					<xsd:maxLength value="30" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="char35">
+				<xsd:restriction base="xsd:string">
+					<xsd:maxLength value="35" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="char4">
+				<xsd:restriction base="xsd:string">
+					<xsd:maxLength value="4" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="char40">
+				<xsd:restriction base="xsd:string">
+					<xsd:maxLength value="40" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="char50">
+				<xsd:restriction base="xsd:string">
+					<xsd:maxLength value="50" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="char8">
+				<xsd:restriction base="xsd:string">
+					<xsd:maxLength value="8" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="clnt3">
+				<xsd:restriction base="xsd:string">
+					<xsd:maxLength value="3" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="date">
+				<xsd:restriction base="xsd:string">
+					<xsd:maxLength value="10" />
+					<xsd:pattern value="\d\d\d\d-\d\d-\d\d" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="decimal5.2">
+				<xsd:restriction base="xsd:decimal">
+					<xsd:totalDigits value="5" />
+					<xsd:fractionDigits value="2" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="lang">
+				<xsd:restriction base="xsd:string">
+					<xsd:maxLength value="1" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="numeric1">
+				<xsd:restriction base="xsd:string">
+					<xsd:maxLength value="1" />
+					<xsd:pattern value="\d*" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="numeric10">
+				<xsd:restriction base="xsd:string">
+					<xsd:maxLength value="10" />
+					<xsd:pattern value="\d*" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="numeric3">
+				<xsd:restriction base="xsd:string">
+					<xsd:maxLength value="3" />
+					<xsd:pattern value="\d*" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:simpleType name="time">
+				<xsd:restriction base="xsd:string">
+					<xsd:maxLength value="8" />
+					<xsd:pattern value="\d\d:\d\d:\d\d" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:complexType name="ZCA_DELVRY_ZONES">
+				<xsd:sequence>
+					<xsd:element name="MANDT" type="tns:clnt3" />
+					<xsd:element name="KUNNR" type="tns:char10" />
+					<xsd:element name="DLVRY_ZONE" type="tns:numeric1" />
+					<xsd:element name="DLVRY_ZONE_SEQ" type="tns:numeric10" />
+					<xsd:element name="PSTLZ" type="tns:char10" />
+					<xsd:element name="AEDAT" type="tns:date" />
+					<xsd:element name="AENAM" type="tns:char150" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="ZCA_OL_PICKERS">
+				<xsd:sequence>
+					<xsd:element name="MANDT" type="tns:clnt3" />
+					<xsd:element name="RECORD_ID" type="tns:char10" />
+					<xsd:element name="SITE_CUSTOMER" type="tns:char10" />
+					<xsd:element name="FIRST_NAME" type="tns:char50" />
+					<xsd:element name="LAST_NAME" type="tns:char50" />
+					<xsd:element name="PICKER_PIN" type="tns:char8" />
+					<xsd:element name="PICKER_SECURITY" type="tns:numeric1" />
+					<xsd:element name="PICKER_STATUS" type="tns:char1" />
+					<xsd:element name="AENAM" type="tns:char12" />
+					<xsd:element name="AEDAT" type="tns:date" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="ZCA_STORE_PERSONNEL_DATA">
+				<xsd:sequence>
+					<xsd:element name="PARNR" type="tns:numeric10" />
+					<xsd:element name="KUNNR" type="tns:char10" />
+					<xsd:element name="PAFKT" type="tns:char2" />
+					<xsd:element name="NAMEV" type="tns:char35" />
+					<xsd:element name="NAME1" type="tns:char35" />
+					<xsd:element name="FUNCTION" type="tns:char20" />
+					<xsd:element name="SECURITY_LEVEL" type="tns:char2" />
+					<xsd:element name="STATUS" type="tns:char2" />
+					<xsd:element name="PIN" type="tns:char8" />
+					<xsd:element name="TITEL_AP" type="tns:char35" />
+					<xsd:element name="EMAIL_ADDRESS" type="tns:char241" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="ZSD_ST_ENTITY">
+				<xsd:sequence>
+					<xsd:element name="ENTITY" type="tns:char3" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="ZPOSDPT_CUST_ATR">
+				<xsd:sequence>
+					<xsd:element name="MANDT" type="tns:clnt3" />
+					<xsd:element name="LOCNR" type="tns:char10" />
+					<xsd:element name="POSDEPT" type="tns:char3" />
+					<xsd:element name="AUT_ALLREQ_STAT" type="tns:char1" />
+					<xsd:element name="AUT_ALLREQ_DATE" type="tns:date" />
+					<xsd:element name="CAO_STATUS" type="tns:char1" />
+					<xsd:element name="HOME_ORDER_PARTN" type="tns:char4" />
+					<xsd:element name="ORD_ITEMS_TO_ISP" type="tns:char1" />
+					<xsd:element name="EMAIL_ADDRESS" type="tns:char241" />
+					<xsd:element name="MIN_PREP_TIME" type="tns:decimal5.2" />
+					<xsd:element name="OPEN_HOURS_EN" type="tns:char255" />
+					<xsd:element name="OPEN_HOURS_FR" type="tns:char255" />
+					<xsd:element name="PHONE_NUMBER" type="tns:char40" />
+					<xsd:element name="FAX_NUMBER" type="tns:char30" />
+					<xsd:element name="CELL_PHONE" type="tns:char30" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="ZCA_STORE_HOURS">
+				<xsd:sequence>
+					<xsd:element name="MANDT" type="tns:clnt3" />
+					<xsd:element name="SITE_CUSTOMER" type="tns:char10" />
+					<xsd:element name="WEEK_DAY" type="tns:char2" />
+					<xsd:element name="SCHEDULE_INDICAT" type="tns:char1" />
+					<xsd:element name="START_HOURS" type="tns:time" />
+					<xsd:element name="END_HOURS" type="tns:time" />
+					<xsd:element name="IS_CLOSED" type="tns:char1" />
+					<xsd:element name="AENAM" type="tns:char150" />
+					<xsd:element name="AEDAT" type="tns:date" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="ZCA_STORE_PROPERTIES_OLS">
+				<xsd:sequence>
+					<xsd:element name="ID" type="tns:char30" />
+					<xsd:element name="SITE_CUSTOMER" type="tns:char10" />
+					<xsd:element name="PROPERTY" type="tns:char10" />
+					<xsd:element name="VALUE" type="tns:char30" />
+					<xsd:element name="DESCRIPTION" type="tns:char30" />
+					<xsd:element name="ACTION" type="tns:char1" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="ZCA_STR_HRS_EXCP">
+				<xsd:sequence>
+					<xsd:element name="MANDT" type="tns:clnt3" />
+					<xsd:element name="SITE_CUSTOMER" type="tns:char10" />
+					<xsd:element name="SCHEDULE_INDICAT" type="tns:char1" />
+					<xsd:element name="START_DATE" type="tns:date" />
+					<xsd:element name="END_DATE" type="tns:date" />
+					<xsd:element name="START_HOURS" type="tns:time" />
+					<xsd:element name="END_HOURS" type="tns:time" />
+					<xsd:element name="DESCRIPTION_EN" type="tns:char250" />
+					<xsd:element name="DESCRIPTION_FR" type="tns:char250" />
+					<xsd:element name="IS_CLOSED" type="tns:char1" />
+					<xsd:element name="IS_RECURRING" type="tns:char1" />
+					<xsd:element name="AENAM" type="tns:char150" />
+					<xsd:element name="AEDAT" type="tns:date" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="ZCA_TIME_SLOT">
+				<xsd:sequence>
+					<xsd:element name="MANDT" type="tns:clnt3" />
+					<xsd:element name="SITE_CUSTOMER" type="tns:char10" />
+					<xsd:element name="FULFILLMENT_CODE" type="tns:char1" />
+					<xsd:element name="WEEK_DAY" type="tns:char2" />
+					<xsd:element name="START_HOURS" type="tns:time" />
+					<xsd:element name="END_HOURS" type="tns:time" />
+					<xsd:element name="QUOTA" type="tns:numeric3" />
+					<xsd:element name="AEDAT" type="tns:date" />
+					<xsd:element name="AENAM" type="tns:char150" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="ZCA_PAYMT_METH">
+				<xsd:sequence>
+					<xsd:element name="MANDT" type="tns:clnt3" />
+					<xsd:element name="SITE_CUSTOMER" type="tns:char10" />
+					<xsd:element name="FULFILLMENT_TYPE" type="tns:char25" />
+					<xsd:element name="PAYMENT_TYPE" type="tns:char25" />
+					<xsd:element name="AENAM" type="tns:char150" />
+					<xsd:element name="AEDAT" type="tns:date" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="ZSD_ST_CDM_MSG">
+				<xsd:sequence>
+					<xsd:element name="MSG_TYP" type="tns:char1" />
+					<xsd:element name="MSG_ID" type="tns:char20" />
+					<xsd:element name="MSG_TXT" type="tns:char220" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="RfcException.Message">
+				<xsd:sequence>
+					<xsd:element name="ID" type="xsd:string" />
+					<xsd:element name="Number" type="tns:RfcException.Message.Number" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="ZCA_UPDATE_STORE_DATA_OLS.RfcException">
+				<xsd:sequence>
+					<xsd:element name="Name" type="tns:ZCA_UPDATE_STORE_DATA_OLS.RfcExceptions" />
+					<xsd:element name="Text" type="xsd:string" minOccurs="0" />
+					<xsd:element name="Message" type="tns:RfcException.Message" minOccurs="0" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="ZCA_DELVRY_ZONES_TT">
+				<xsd:sequence>
+					<xsd:element name="item" type="tns:ZCA_DELVRY_ZONES" minOccurs="0" maxOccurs="unbounded" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="ZCA_OL_PICKERS_TT">
+				<xsd:sequence>
+					<xsd:element name="item" type="tns:ZCA_OL_PICKERS" minOccurs="0" maxOccurs="unbounded" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="ZCA_STORE_PERSONNEL_DATA_TT">
+				<xsd:sequence>
+					<xsd:element name="item" type="tns:ZCA_STORE_PERSONNEL_DATA" minOccurs="0" maxOccurs="unbounded" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="ZSD_TT_ENTITY">
+				<xsd:sequence>
+					<xsd:element name="item" type="tns:ZSD_ST_ENTITY" minOccurs="0" maxOccurs="unbounded" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="ZPOSDPT_CUST_ATR_TT">
+				<xsd:sequence>
+					<xsd:element name="item" type="tns:ZPOSDPT_CUST_ATR" minOccurs="0" maxOccurs="unbounded" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="ZCA_STORE_HOURS_TT">
+				<xsd:sequence>
+					<xsd:element name="item" type="tns:ZCA_STORE_HOURS" minOccurs="0" maxOccurs="unbounded" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="ZCA_STORE_PROPERTIES_OLS_TT">
+				<xsd:sequence>
+					<xsd:element name="item" type="tns:ZCA_STORE_PROPERTIES_OLS" minOccurs="0" maxOccurs="unbounded" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="ZCA_STR_HRS_EXCL_TT">
+				<xsd:sequence>
+					<xsd:element name="item" type="tns:ZCA_STR_HRS_EXCP" minOccurs="0" maxOccurs="unbounded" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="ZCA_TIME_SLOT_TT">
+				<xsd:sequence>
+					<xsd:element name="item" type="tns:ZCA_TIME_SLOT" minOccurs="0" maxOccurs="unbounded" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="ZCA_PAYMT_METH_TT">
+				<xsd:sequence>
+					<xsd:element name="item" type="tns:ZCA_PAYMT_METH" minOccurs="0" maxOccurs="unbounded" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="ZCA_OLS_BAPI_MESSAGES_TT">
+				<xsd:sequence>
+					<xsd:element name="item" type="tns:ZSD_ST_CDM_MSG" minOccurs="0" maxOccurs="unbounded" />
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:simpleType name="ZCA_UPDATE_STORE_DATA_OLS.RfcExceptions">
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="NO_DATA_POPULATED" />
+					<xsd:enumeration value="WRONG_ACTION" />
+				</xsd:restriction>
+			</xsd:simpleType>
+			<xsd:element name="ZCA_UPDATE_STORE_DATA_OLS.Exception" type="tns:ZCA_UPDATE_STORE_DATA_OLS.RfcException" />
+			<xsd:element name="ZCA_UPDATE_STORE_DATA_OLS">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="I_ACTION" type="tns:char1" />
+						<xsd:element name="I_DELVRY_ZONES" type="tns:ZCA_DELVRY_ZONES_TT" minOccurs="0" />
+						<xsd:element name="I_ONLINE_PICKERS" type="tns:ZCA_OL_PICKERS_TT" minOccurs="0" />
+						<xsd:element name="I_PERSONNEL_DATA" type="tns:ZCA_STORE_PERSONNEL_DATA_TT" minOccurs="0" />
+						<xsd:element name="I_REG_ENTITY" type="tns:ZSD_TT_ENTITY" minOccurs="0" />
+						<xsd:element name="I_SITE_CUSTOMER" type="tns:char10" />
+						<xsd:element name="I_STORE_DEPARMENTS" type="tns:ZPOSDPT_CUST_ATR_TT" minOccurs="0" />
+						<xsd:element name="I_STORE_HOURS" type="tns:ZCA_STORE_HOURS_TT" minOccurs="0" />
+						<xsd:element name="I_STORE_PROPERTIES" type="tns:ZCA_STORE_PROPERTIES_OLS_TT" minOccurs="0" />
+						<xsd:element name="I_STORE_SERVICES" type="tns:ZCA_STORE_PROPERTIES_OLS_TT" minOccurs="0" />
+						<xsd:element name="I_STR_HRS_EXCL" type="tns:ZCA_STR_HRS_EXCL_TT" minOccurs="0" />
+						<xsd:element name="I_TIME_SLOTS" type="tns:ZCA_TIME_SLOT_TT" minOccurs="0" />
+						<xsd:element name="I_ZCA_PAYMT_METH" type="tns:ZCA_PAYMT_METH_TT" minOccurs="0" />
+						<xsd:element name="LANGUAGE" type="tns:lang" />
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="ZCA_UPDATE_STORE_DATA_OLSResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="E_MESSAGES" type="tns:ZCA_OLS_BAPI_MESSAGES_TT" />
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:schema>
+	</wsdl:types>
+	<wsdl:message name="ZCA_UPDATE_STORE_DATA_OLS">
+		<wsdl:part name="parameters" element="tns:ZCA_UPDATE_STORE_DATA_OLS" />
+	</wsdl:message>
+	<wsdl:message name="ZCA_UPDATE_STORE_DATA_OLSResponse">
+		<wsdl:part name="parameter" element="tns:ZCA_UPDATE_STORE_DATA_OLSResponse" />
+	</wsdl:message>
+	<wsdl:portType name="ZCA_UPDATE_STORE_DATA_OLS">
+		<wsp:Policy>
+			<wsp:PolicyReference URI="#IF_ZCA_UPDATE_STORE_DATA_OLS" />
+		</wsp:Policy>
+		<wsdl:operation name="ZCA_UPDATE_STORE_DATA_OLS">
+			<wsp:Policy>
+				<wsp:PolicyReference URI="#OP_ZCA_UPDATE_STORE_DATA_OLS" />
+			</wsp:Policy>
+			<wsdl:input message="tns:ZCA_UPDATE_STORE_DATA_OLS" />
+			<wsdl:output message="tns:ZCA_UPDATE_STORE_DATA_OLSResponse" />
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="ZCA_UPDATE_STORE_DATA_OLS" type="tns:ZCA_UPDATE_STORE_DATA_OLS">
+		<wsp:Policy>
+			<wsp:PolicyReference URI="#BN_ZCA_UPDATE_STORE_DATA_OLS" />
+		</wsp:Policy>
+		<wsa:EndpointReference xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing">
+			<wsa:ReferenceParameters />
+		</wsa:EndpointReference>
+		<soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document" />
+		<wsdl:operation name="ZCA_UPDATE_STORE_DATA_OLS">
+			<soap:operation soapAction="" style="document" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="ZCA_UPDATE_STORE_DATA_OLS">
+		<wsdl:port name="ZCA_UPDATE_STORE_DATA_OLS" binding="tns:ZCA_UPDATE_STORE_DATA_OLS">
+			<soap:address location="http://sparrow.sobeys.com:8000/sap/bc/srt/rfc/sap/zca_update_store_data_ols/041/zca_update_store_data_ols/zca_update_store_data_ols" />
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>
